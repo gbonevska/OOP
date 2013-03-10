@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 
 namespace Matrix
@@ -14,8 +15,6 @@ namespace Matrix
         private int col;
 
         //properties
-      //  public static System.Reflection.Binder Binder { get { return Binder; } }
-
         public int Row
         {
             get { return row; }
@@ -81,6 +80,7 @@ namespace Matrix
                     resultMatrix[i, j] = (dynamic)firstMatrix[i, j] + (dynamic)secondMatrix[i, j];
                 }
             }
+            return resultMatrix;
         }
 
         public static Matrix<T> operator -(Matrix<T> firstMatrix, Matrix<T> secondMatrix)
@@ -99,28 +99,10 @@ namespace Matrix
                     resultMatrix[i, j] = firstMatrix[i, j] - (dynamic)secondMatrix[i, j];
                 }
             }
+            return resultMatrix;
         }
 
-        public static Matrix<T> operator *(Matrix<T> firstMatrix, Matrix<T> secondMatrix)
-        {
-            if (firstMatrix.Col != secondMatrix.Row)
-            {
-                throw new FormatException("The multiplay of matrixes could be used on matrixes only if A.col = B.row");
-            }
 
-            Matrix<T> resultMatrix = new Matrix<T>(firstMatrix.Row, secondMatrix.Col);
-
-            for (int i = 0; i < firstMatrix.Row; i++)
-            {
-                for (int j = 0; j < secondMatrix.Col - 1; j++)
-                {
-                    for (int k = 0; k < secondMatrix.Col; k++)
-                    {
-                        resultMatrix[i, j] += (dynamic)firstMatrix[i, k] * (dynamic)secondMatrix[k, j];
-                    }
-                }
-            }
-        }
 
         public static Boolean operator true(Matrix<T> firstMatrix)
         {
@@ -128,11 +110,11 @@ namespace Matrix
             {
                 for (int j = 0; j < firstMatrix.Col; j++)
                 {
-                    if (firstMatrix[i,j].Equals(0))
+                    if (firstMatrix[i, j].Equals(0))
                     {
                         return false;
                     }
-                }  
+                }
             }
             return true;
         }
